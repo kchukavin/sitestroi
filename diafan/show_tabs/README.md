@@ -1,6 +1,6 @@
 # Генератор табов
 
-show_tabs.php Положить в папку themes/funstions/
+show_tabs.php Положить в папку themes/functions/
 
 
 ## Пример использования
