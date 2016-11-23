@@ -1,0 +1,24 @@
+<style>
+/** hover-item **/
+
+.hover-item__normal {
+	display: block;
+}
+
+.hover-item__hover {
+    display: none;
+}
+
+.hover-item:hover .hover-item__normal {
+	display: none;
+}
+
+.hover-item:hover .hover-item__hover {
+	display: block;
+}
+</style>
+
+<div class="hover-item">
+	<img class="hover-item__normal" src="img1.jpg">
+	<img class="hover-item__hover" src="img1_hover.jpg">
+</div>
