@@ -1,0 +1,41 @@
+
+<head>
+
+<script type="text/javascript">
+	var YMPage = 'unknown';
+</script>
+
+</head>
+
+
+
+<body>
+
+
+
+
+<script type="text/javascript">
+	// Цели
+
+	function reachGoal(name) {
+		console.log(name);
+		//yaCounter29322985.reachGoal(name);
+	}
+	
+	$('.YMGoal_callback').click(function(){
+		reachGoal('Call-back');
+	});
+	
+	$('.YMGoal_ok').click(function(){
+		reachGoal('OK');
+	});
+	
+	$('#content .feedback_form input[type="submit"]').click(function(){
+		if (YMPage == 'banner_action') {
+			reachGoal('Send-request');
+		}
+	});
+</script>
+</body>
+
+
