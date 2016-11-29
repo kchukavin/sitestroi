@@ -1,7 +1,31 @@
 <?php
 
 function post2Msg($post) {
-	return var_export($post, true);
+	
+	$translate = array(
+		'name'		=> 'Имя',
+		'phone'		=> 'Телефон',
+		'email'		=> 'Email',
+		'message'	=> 'Сообщение',
+		'date'		=> 'Дата',
+		'kolichestvo'	=> 'Количество людей',
+		'from'		=> 'Откуда',
+		'to'		=> 'Куда',
+		'direction'	=> 'Направление',
+	);
+
+	$msg = $post['form_name'] . "\n\n";
+	unset($post['form_name']);
+	
+	foreach ($post as $key => $val) {
+		$name = $key;
+		if (array_key_exists($key, $translate)) $name = $translate[$key];
+		
+		$msg .= "$name: $val\n";
+	}
+
+
+	return $msg;
 }
 
 $address = "konst.site@gmail.com"; // Сюда впишите свою эл. почту
