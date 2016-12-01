@@ -43,37 +43,7 @@ $message = post2Msg($_POST);
 // А эта функция как раз занимается отправкой письма на указанный вами email
 $send = mail ($address,$sub,$message,"Content-type:text/plain; charset = utf-8\r\nFrom:$email");
 
-ini_set('short_open_tag', 'On');
+//ini_set('short_open_tag', 'On');
 header('Refresh: 3; URL='.$redirectPath);
-
+include('phpsend_view.php');
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="refresh" content="3; url=<?php echo $redirectPath;?>">
-
-<title>С вами свяжутся</title>
-
-<style type="text/css">
-body {
-   background: #22BFF7;
-   color: white;
-}
-</style>
-
-<script type="text/javascript">
-setTimeout('location.replace("<?php echo $redirectPath;?>")', 2000);
-/*Изменить текущий адрес страницы через 3 секунды (3000 миллисекунд)*/
-</script> 
-</head>
-
-<body>
-	<h1>Спасибо! С вами свяжутся!</h1>
-	
-	<p>Ваше сообщение:</p>
-	<pre>
-		<?php echo $message; ?>
-	</pre>
-</body>
-</html>
