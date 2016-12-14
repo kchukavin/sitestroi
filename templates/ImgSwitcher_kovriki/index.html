@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="ru"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+	<title>Заголовок</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	
+	<style>
+		.img-switcher__img-container {
+			position: relative;
+		}
+
+		.img-switcher__img {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.img-switcher__img:first-child {
+			position: static;
+		}
+
+	</style>
+	
+</head>
+
+<body>
+
+<div class="img-switcher">
+	<div class="img-switcher__img-container">
+		<img id="img-kovrik" class="img-switcher__img" src="img/k-bel.jpg">
+		<img id="img-ramka" class="img-switcher__img" src="img/r-bel.png">
+	</div>
+	
+	<select class="img-switcher__param" data-for="img-ramka">
+		<option value="r-bel.png">Белый</option>
+		<option value="r-bezh.png">Бежевый</option>
+		<option value="r-chern.png">Чёрный</option>
+		<option value="r-haki.png">Хаки</option>
+		<option value="r-kor.png">Коричневый</option>
+		<option value="r-krasn.png">Красный</option>
+		<option value="r-orang.png">Оранжевый</option>
+		<option value="r-s-fiol.png">Светлофиолетовый</option>
+		<option value="r-s-kor.png">Светлокоричневый</option>
+		<option value="r-s-ser.png">Светлосерый</option>
+		<option value="r-sin.png">Синий</option>
+		<option value="r-t-ser.png">Тёмносерый</option>
+		<option value="r-t-sin.png">Тёмносиний</option>
+		<option value="r-t-zel.png">Тёмнозелёный</option>
+		<option value="r-vasil.png">Васильковый</option>
+		<option value="r-zel.png">Зелёный</option>
+		<option value="r-zhelt.png">Жёлтый</option>
+	</select>
+	
+	<select class="img-switcher__param" data-for="img-kovrik">
+		<option value="k-bel.jpg">Белый</option>
+		<option value="k-bezh.jpg">Бежевый</option>
+		<option value="k-chern.jpg">Черный</option>
+		<option value="k-fiol.jpg">Фиолетовый</option>
+		<option value="k-korich.jpg">Коричневый</option>
+		<option value="k-krasn.jpg">Красный</option>
+		<option value="k-orang.jpg">Оранжевый</option>
+		<option value="k-roz.jpg">Розовый</option>
+		<option value="k-salat.jpg">Салатовый</option>
+		<option value="k-ser.jpg">Серый</option>
+		<option value="k-sin.jpg">Синий</option>
+		<option value="k-s-kor.jpg">Светлокоричневый</option>
+		<option value="k-zhelt.jpg">Желтый</option>
+	</select>
+</div>
+	
+	
+<script src="libs/jquery/dist/jquery.min.js"></script>
+<script src="js/imgswitcher.js"></script>
+	
+</body>
+</html>
