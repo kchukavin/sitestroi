@@ -1,4 +1,5 @@
 cache/
 userfiles/
 tmp/
+.bash_history
 config.php
