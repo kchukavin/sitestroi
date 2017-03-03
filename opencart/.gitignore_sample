@@ -1,0 +1,9 @@
+.bash_history
+.vim*
+.cache
+system/cache/
+system/logs/
+image/cache/*
+image/cache2/
+image/data/
+config.php

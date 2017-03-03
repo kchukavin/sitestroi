@@ -2,6 +2,7 @@
 .vim*
 .cache
 cache/
-userfiles/
+logs/
 tmp/
-config.php
+configuration.php
+

@@ -1,0 +1,7 @@
+.bash_history
+.vim*
+.cache
+bitrix/cache/
+bitrix/backup/
+bitrix/tmp/
+upload
