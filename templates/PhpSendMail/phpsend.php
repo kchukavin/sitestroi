@@ -31,7 +31,7 @@ function post2Msg($post) {
 	return $msg;
 }
 
-$address = "mosmedsluzhba@yandex.ru"; // Сюда впишите свою эл. почту
+$address = "konst.site@gmail.com"; // Сюда впишите свою эл. почту
 $sub = $_POST['form_name'] . ' <'.$_SERVER['HTTP_REFERER'].'>'; // Тема письма
 $email = 'Заказ <no-reply@nodomain.no>'; // От кого
 
