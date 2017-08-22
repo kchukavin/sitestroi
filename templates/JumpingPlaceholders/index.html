@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="css/j-placeholders.css">
+</head>
+
+
+<body>
+
+	<form class="j-placeholders">
+		<div class="j-placeholders__input-group">
+			<div class="j-placeholders__label">Введите имя</div>
+			<input type="text" name="name" value="" class="j-placeholders__input" placeholder="Введите имя">
+		</div>
+		
+		<div class="j-placeholders__input-group">
+			<div class="j-placeholders__label">Введите телефон</div>
+			<input type="tel" name="phone" value="" class="j-placeholders__input" placeholder="Введите телефон">
+		</div>
+
+		<div class="j-placeholders__input-group">
+			<div class="j-placeholders__label">Введите email</div>
+			<input type="email" name="email" value="" class="j-placeholders__input" placeholder="Введите email">
+		</div>
+	</form>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+/*
+Скрипты инициализации
+*/
+//$(window).load(function(){
+$(document).ready(function(){
+    // Показываем/скрываем подсказки для полей формы
+    $('.j-placeholders__input').focusin(function() {
+        $(this).prev('.j-placeholders__label').show();
+    }).focusout(function() {
+        if ($(this).val().length < 1) {
+            $(this).prev('.j-placeholders__label').hide();
+        }
+    });
+});
+</script>
+	
+</body>
+</html>
