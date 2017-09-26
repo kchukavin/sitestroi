@@ -1,0 +1,12 @@
+# Place this file in the root folder, and sites to subfolders: `site-chelny` and `site-nizhnekamsk` for different domains
+
+RewriteEngine on
+
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^okna16.com$ [NC]
+RewriteRule (.*) /site-chelny/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^okna16-nk.ru$ [NC]
+RewriteRule (.*) /site-nizhnekamsk/$1 [L]
+
