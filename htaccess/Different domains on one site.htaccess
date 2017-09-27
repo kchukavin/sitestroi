@@ -4,7 +4,8 @@ RewriteEngine on
 
 RewriteBase /
 
-RewriteCond %{HTTP_HOST} ^okna16.com$ [NC]
+RewriteCond %{HTTP_HOST} ^okna16.com$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^chelny.okna16.com$ [NC]
 RewriteRule (.*) /site-chelny/$1 [L]
 
 RewriteCond %{HTTP_HOST} ^okna16-nk.ru$ [NC]
