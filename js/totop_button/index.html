@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+/*** totop ***/
+
+#totop {
+	display:none;
+	z-index:55;
+	position:fixed;
+	bottom:45px;
+	right:30px
+}
+#totop a {
+	border:0 !important;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	margin-left:14px;
+	background:rgba(0,0,0,0.5);
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	-khtml-border-radius:2px;
+	border-radius:2px
+}
+#totop a span {
+	display:block;
+	width:30px;
+	height:22px;
+	margin:16px 12px
+}
+#totop a.top span {
+}
+
+
+/*** for demo ***/
+
+p {
+	height: 50px;
+	list-style-type: none;
+}
+
+p:nth-child(odd) {
+	background: cyan;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+
+<!--noindex-->
+<div id="totop"><a href="#" title='наверх' class="top"><span>Наверх</span></a></div>
+<!--/noindex-->
+
+
+
+<script>
+
+// при прокрутке страницы
+function scrollPos() {
+	var scroll = $(window).scrollTop();
+	if (scroll>=450) {
+		$('#totop').fadeIn();
+	} else {
+		$('#totop').fadeOut();
+	}
+}
+
+// наверх
+$('#totop a.top').click(function(e){
+	console.log('fdsfsdfsdf');
+	$('html, body').animate({'scrollTop':0}, 500);
+	return false;
+});
+
+$(window).on('scroll',function() {
+   scrollPos();
+});
+
+</script>
+
+
+</body>
+</html>

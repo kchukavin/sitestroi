@@ -4,10 +4,13 @@ RewriteEngine on
 
 RewriteBase /
 
-RewriteCond %{HTTP_HOST} ^okna16.com$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^chelny.okna16.com$ [NC]
-RewriteRule (.*) /site-chelny/$1 [L]
-
-RewriteCond %{HTTP_HOST} ^okna16-nk.ru$ [NC]
+RewriteCond %{HTTP_HOST} ^avtopodbor116-nk.omadit.beget.tech$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^nizhnekamsk.avtopodbor116.ru$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^nizhnekamsk.avtovykup16.ru$ [NC]
 RewriteRule (.*) /site-nizhnekamsk/$1 [L]
 
+RewriteCond %{HTTP_HOST} ^avtopodbor116-nk-bak.omadit.beget.tech$ [NC]
+RewriteRule (.*) /site-bak/$1 [L]
+
+# All other redirect to /site-chelny/
+RewriteRule (.*) /site-chelny/$1 [L]

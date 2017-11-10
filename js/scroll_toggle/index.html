@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Заголовок страницы</title>
+	
+	<style>
+		.scroll-toggle_appear {
+			display: none;
+		}
+		
+		/** for demo **/
+		.fixed {
+			position: fixed;
+			top: 0;
+			background: white;
+		}
+		.lines p {
+			height: 100px;
+		}
+		.lines p:nth-child(odd) {
+			background: gray;
+		}
+	</style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<div class="fixed">
+	<h1>Scroll-зависимые элементы</h1>
+	<div class="scroll-toggle scroll-toggle_appear">Visible on page</div>
+	<div class="scroll-toggle scroll-toggle_disappear">Visible only on top, not on whole page</div>
+	</div>
+	
+
+	<div class="lines">
+	<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+	</div>
+
+<script>
+// События при скроллинге
+window.onscroll = function() {
+	// Появление элементов в шапке //
+	// Позиция скролла
+	var appearPos = 100;
+	
+	var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+	if (scrolled >= appearPos) {
+		$('.scroll-toggle_appear').slideDown();
+		$('.scroll-toggle_disappear').slideUp();
+	}
+	if (scrolled < appearPos) {
+		$('.scroll-toggle_appear').slideUp();
+		$('.scroll-toggle_disappear').slideDown();
+	}
+}
+</script>
+</body>
+</html>

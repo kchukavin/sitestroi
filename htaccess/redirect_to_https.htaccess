@@ -1,0 +1,4 @@
+# Редиректим всё на https, кроме robots.txt
+RewriteCond %{HTTPS} !=on
+RewriteCond %{REQUEST_URI} !robots.txt$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]

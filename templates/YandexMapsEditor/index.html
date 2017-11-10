@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  <style>
+/*=================== Map ===================*/
+.map__wrap {
+  height: 586px;
+  position: relative;
+}
+  </style>
+  
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <title>SoftPipe</title>
+</head>
+<body>
+  <section class="map">
+		<div class="map__wrap" id="map">
+		</div>
+  </section>
+  <button class="end_edit">End edit</button>
+  <section id="geometry">
+  
+  </section>
+  <!-- Тех. характеристики конец -->
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+	<!-- Yandex Map start -->
+  <script type="text/javascript">
+			ymaps.ready(init);
+			var myMap,
+					myPlacemark,
+					haierPlacemark,
+					kipmasterPlacemark;
+
+			function init(){     
+					myMap = new ymaps.Map("map", {
+							center: [55.72531477, 52.48169110],
+            	zoom: 15
+					});
+					
+					myMap.controls.remove('trafficControl');
+					
+					myPlacemark = new ymaps.Placemark(
+						[55.72995781, 52.48066451], 
+						{iconCaption: 'Автосборочный проезд, 16с7'},
+						{preset: 'islands#redDotIconWithCaption'}
+					);
+				
+					haierPlacemark = new ymaps.Placemark(
+						[55.72620399, 52.47761752],
+						{},
+						{
+						 iconLayout: 'default#image', 
+						 iconImageHref: 'img/haier-placemark.png',
+						 iconImageSize: [98,83],
+						 iconImageOffset: [-49, -75]
+						}
+					);
+				
+				  kipmasterPlacemark = new ymaps.Placemark(
+						[55.71920742, 52.47442819],
+						{},
+						{
+						 iconLayout: 'default#image', 
+						 iconImageHref: 'img/kipmaster-placemark.png',
+						 iconImageSize: [190,87],
+						 iconImageOffset: [-50, -75],
+						 zIndex: 1
+						}
+					);
+					
+					var polyline = new ymaps.Polyline([ [ 55.719612, 52.473064 ], [ 55.718549, 52.471054 ], [ 55.730363, 52.450892 ], [ 55.733000, 52.446500 ], [ 55.733400, 52.445800 ], [ 55.733773, 52.444973 ], [ 55.733958, 52.444270 ], [ 55.734073, 52.443562 ], [ 55.734100, 52.442100 ] ], {}, {
+						strokeColor: '#ff0000',
+						strokeWidth: 5, // ширина линии
+						zIndex: 1000
+					});
+					var polyline2 = new ymaps.Polyline([ [ 55.718656, 52.472321 ], [ 55.719612, 52.473064 ], [ 55.719271, 52.471284 ] ], {}, {
+						strokeColor: '#ff0000',
+						strokeWidth: 5, // ширина линии
+						zIndex: 1000
+					});
+				
+					myMap.geoObjects
+					.add(myPlacemark)
+					.add(haierPlacemark)
+					.add(kipmasterPlacemark)
+					.add(polyline)
+					.add(polyline2);
+					
+					// Включаем режим редактирования.
+					polyline2.editor.startEditing();
+					
+					
+					$('.end_edit').click(
+						function () {
+							// Отключаем кнопки, чтобы на карту нельзя было
+							// добавить более одного редактируемого объекта (чтобы в них не запутаться).
+							$('input').attr('disabled', true);
+		 
+							polyline2.editor.stopEditing();
+		 
+							printGeometry(polyline2.geometry.getCoordinates());
+ 
+					});
+			}
+			
+			function printGeometry (coords) {
+				$('#geometry').html('Координаты: ' + stringify(coords));
+	 
+				function stringify (coords) {
+					var res = '';
+					if ($.isArray(coords)) {
+						res = '[ ';
+						for (var i = 0, l = coords.length; i < l; i++) {
+							if (i > 0) {
+								res += ', ';
+							}
+							res += stringify(coords[i]);
+						}
+						res += ' ]';
+					} else if (typeof coords == 'number') {
+						res = coords.toPrecision(10);
+					} else if (coords.toString) {
+						res = coords.toString();
+					}
+	 
+					return res;
+				}
+			}
+			
+	</script>
+	<!-- Yandex Map end -->
+</body>
+</html>
