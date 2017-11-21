@@ -31,6 +31,26 @@ function post2Msg($post) {
 	return $msg;
 }
 
+
+function telegramSend($msg) {
+	$telegram_bot_token = '123456789:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+	$telegram_chat_id = -123456789;
+	
+	$query = array(
+		'chat_id' => $telegram_chat_id,//id чата
+		'parse_mode' => 'Markdown',
+		//'parse_mode' => 'HTML',
+		'text' => $msg
+	);
+	
+	file_get_contents(sprintf(
+		'https://api.telegram.org/bot%s/sendMessage?%s', 
+		$telegram_bot_token, http_build_query($query)
+	));
+	
+}
+
+
 $address = "konst.site@gmail.com"; // Сюда впишите свою эл. почту
 $sub = $_POST['form_name'] . ' <'.$_SERVER['HTTP_REFERER'].'>'; // Тема письма
 $email = 'Заказ <no-reply@nodomain.no>'; // От кого
@@ -38,6 +58,8 @@ $email = 'Заказ <no-reply@nodomain.no>'; // От кого
 // А здесь прописывается текст сообщения, \n - перенос строки
 $message = post2Msg($_POST);
 
+// Отправка в Telegram
+telegramSend($message);
 // А эта функция как раз занимается отправкой письма на указанный вами email
 $send = mail ($address,$sub,$message,"Content-type:text/plain; charset = utf-8\r\nFrom:$email");
 

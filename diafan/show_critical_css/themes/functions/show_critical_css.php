@@ -30,7 +30,7 @@ if (! defined('DIAFAN'))
 $cssToShow = array();
 
 foreach ($linksArray as $pattern => $value) {
-	if (preg_match('@.*' . $pattern . '.*@', $this->diafan->_site->rewrite)) {
+	if (preg_match('@.*' . $pattern . '.*@', $_SERVER['REQUEST_URI'])) {
 		$cssToShow = $value;
 		break;
 	}
