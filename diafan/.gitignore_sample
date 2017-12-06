@@ -3,5 +3,7 @@
 .cache
 cache/
 userfiles/
+userfls/
 tmp/
+vendor/
 config.php

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Простой аккордеон</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+.my-acco__content {
+	display: none;
+}
+</style>
+
+</head>
+<body>
+	<ul class="my-acco">
+		<li>
+			<a class="my-acco__toggle" href="#">О магазине</a>
+			<div class="my-acco__content">
+				Текст о магазине<br>
+				Текст о магазине<br>
+				Текст о магазине<br>
+				Текст о магазине<br>
+			</div>
+		</li>
+		<li>
+			<a class="my-acco__toggle" href="#">О магазине</a>
+			<div class="my-acco__content">
+				Текст о магазине<br>
+				Текст о магазине<br>
+				Текст о магазине<br>
+				Текст о магазине<br>
+			</div>
+		</li>
+		<li>
+			<a class="my-acco__toggle" href="#">О магазине</a>
+			<div class="my-acco__content">
+				Текст о магазине<br>
+				Текст о магазине<br>
+				Текст о магазине<br>
+				Текст о магазине<br>
+			</div>
+		</li>
+	</ul>
+	
+	
+<script>
+	$('.my-acco__toggle').click(function(e) {
+		e.preventDefault();
+		$(this).next('.my-acco__content').slideToggle('slow');
+	});
+</script>
+
+</body>
+</html>
