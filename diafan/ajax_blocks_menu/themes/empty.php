@@ -1,0 +1,1 @@
+<insert name="show_text">
