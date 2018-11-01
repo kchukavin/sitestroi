@@ -6,20 +6,16 @@ use Leafo\ScssPhp\Compiler;
 
 // CONFIG BEGIN
 
-$LOGS = true;
+$LOGS = false;
 
-$customDir = __DIR__ . '/../custom/tatartdom2017';
+$rootDir = fixWindowsPath(__DIR__) . '/../';
 
 $tasks = array(
 	array(
-		'import_dir' => $customDir . '/css/sass/',
-		'import_file' => 'styles_add.scss',
-		'output_file' => $customDir . '/css/styles_add.css',
-	),
-	array(
-		'import_dir' => $customDir . '/css/m_sass/',
-		'import_file' => 'main.scss',
-		'output_file' => $customDir . '/css/m/main.css',
+		'import_dir' => 'custom/my/scss/',
+		'import_file' => 'styles.scss',
+		'output_dir' => 'custom/my/css/',
+		'output_file' => 'generated.css',
 	),
 );
 
@@ -28,22 +24,34 @@ $tasks = array(
 writeLog('Processing:<br>');
 
 foreach ($tasks as $task) {
+	$outputFile = $rootDir . $task['output_dir'] . $task['output_file'];
+	$hashFile = $outputFile . '.hash';
+	$importDir = $rootDir . $task['import_dir'];
+
 	writeLog($task['import_dir'] . ' => ' . $task['output_file'] . "... ");
-	$oldHash = loadHash($task['output_file'] . '.hash');
-	$newHash = calcFilesHash($task['import_dir']);
+	$oldHash = loadHash($hashFile);
+	$newHash = calcFilesHash($importDir);
 	
 	if ($oldHash === $newHash) {
 		writeLog("No changes.\n");
 		continue;
 	}
 	
-	saveHash($task['output_file'] . '.hash', $newHash);
+	saveHash($hashFile, $newHash);
 	
 	$scss = new Compiler();
-	$scss->setImportPaths($task['import_dir']);
+	$scss->setImportPaths($importDir);
+	$scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
+	$scss->setSourceMapOptions(array(
+	    //'sourceRoot' => realpath($task['import_dir']),
+	    'sourceMapWriteTo' => $outputFile . '.map',
+	    'sourceMapURL' => $task['output_file'] . '.map',
+	    'sourceMapBasepath' => $importDir,
+	    'sourceMapRootpath' => '/' . $task['import_dir'],
+	));
 
 	writeLog('Compiling... ');
-	file_put_contents($task['output_file'], $scss->compile('@import "'. $task['import_file'] .'";'));
+	file_put_contents($outputFile, $scss->compile('@import "'. $task['import_file'] .'";'));
 	writeLog(' done.<br>');
 }
 
@@ -59,16 +67,46 @@ function saveHash($filename, $hash)
 	return file_put_contents($filename, $hash);
 }
 
+function scanFileTimes($target)
+{
+	$r = array();
+
+	if(is_dir($target)) {
+
+		$files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
+
+		foreach($files as $file)
+		{
+			$r = array_merge($r, scanFileTimes($file));
+		}
+	} else {
+		$r[] = filemtime($target);
+	}
+
+	return $r;
+}
+
 function calcFilesHash($dir)
 {
-	$data = '';
-	foreach (scandir($dir) as $filename) {
-		$data .= filemtime($dir . '/' . $filename);
-	}
+	$data = implode(scanFileTimes($dir));
 	return md5($data);
+}
+
+
+function fixWindowsPath($path, $addEndSlash = false)
+{
+    $slash = ($addEndSlash) ? '/' : '';
+
+    if (! empty($path)) {
+        $path = str_replace('\\', '/', $path);
+        $path = rtrim($path, '/') . $slash;
+    }
+
+    return $path;
 }
 
 function writeLog($msg)
 {
+	global $LOGS;
 	if ($LOGS) echo $msg;
 }

@@ -1,5 +1,5 @@
 {
     "require": {
-        "leafo/scssphp": "^0.7.1"
+        "leafo/scssphp": "^0.7.7"
     }
 }
