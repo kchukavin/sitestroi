@@ -1,0 +1,34 @@
+
+.animated {
+    transition: all 100ms linear 0s;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section {
+    margin-bottom: 70px;
+}
+
+
+.hidden-sm {
+    @media (max-width: $sm-width) {
+        display: none !important;
+    }
+}
+
+
+.showmore {
+    &__open {
+        display: block;
+        margin-top: 34px;
+        font-size: 18px;
+        color: #383838;
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

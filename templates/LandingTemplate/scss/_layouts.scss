@@ -1,0 +1,10 @@
+
+.container {
+    width: $screenwidth;
+    margin: 0 auto;
+
+    @media (max-width: $screenwidth) {
+        width: 100%;
+    }
+}
+

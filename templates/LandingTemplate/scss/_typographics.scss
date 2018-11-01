@@ -1,0 +1,96 @@
+
+.heading {
+    font-family: "Roboto Condensed", sans-serif;
+    text-transform: uppercase;
+}
+
+h1, .h1 {
+    @extend .heading;
+    margin-bottom: 34px;
+    font-size: 36px;
+    text-align: center;
+    font-weight: normal;
+    color: #39ad9d;
+}
+h2, .h2 {
+    @extend .heading;
+    font-size: 30px;
+    font-weight: normal;
+    color: #39ad9d;
+}
+h3, .h3 {
+    @extend .heading;
+}
+h4, .h4 {
+    @extend .heading;
+}
+h5, .h5 {
+    @extend .heading;
+}
+h6, .h6 {
+    @extend .heading;
+}
+
+
+.heading_underlined {
+    &:after {
+        content: "";
+        display: block;
+        width: 100px;
+        height: 0;
+        margin: 0.25em auto;
+        border-top: 3px solid #39ad9d;
+    }
+}
+
+
+/** ANCHORS **/
+
+a {
+    @extend .animated;
+
+    color: #0b7762;
+    text-decoration: underline;
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:active, &:focus {
+        outline: none;
+    }
+}
+
+/** PARAGRAPHS **/
+
+p {
+    margin: 1.5em 0;
+}
+
+/** FORMS **/
+
+/* text fields */
+input[type='text'],
+input[type='number'],
+input[type='email'],
+input[type='tel'],
+textarea {
+    outline: none;
+    padding: 10px 15px;
+    border: 1px solid #898989;
+    border-radius: 2px;
+
+    &:active, &:focus {
+        outline: none;
+        border: 1px solid #39ad9d;
+    }
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    color: #7c7c7c;
+
+    & > input {
+        display: block;
+    }
+}

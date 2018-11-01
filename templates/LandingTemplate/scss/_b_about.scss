@@ -1,0 +1,49 @@
+.about {
+    text-align: justify;
+
+    &__row {
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    &__photo {
+        float: left;
+        margin: 0 40px 0 0;
+        font-size: 16px;
+
+        img {
+            display: block;
+        }
+    }
+
+    &__col {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &__sign {
+        font-size: 16px;
+        text-align: left;
+        margin-top: 1em;
+
+        img {
+            vertical-align: middle;
+            margin: 0 2em;
+        }
+
+        &:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+
+    p {
+        margin: 0.65em 0;
+        text-indent: 2em;
+    }
+
+}

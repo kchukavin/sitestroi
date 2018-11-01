@@ -1,0 +1,93 @@
+.footer {
+    margin-top: 100px;
+    padding: 40px 0;
+    background: #383838;
+
+    &__wrap {
+        display: flex;
+
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        @media (max-width: $sm-width) {
+            display: block;
+        }
+
+        li {
+            margin: 0 10px;
+            font-size: 16px;
+            color: #e8e8e8;
+
+            @media (max-width: $sm-width) {
+                margin: 10px 0;
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__contacts {
+        text-align: right;
+    }
+
+    &__phones {
+        display: block;
+        vertical-align: middle;
+        margin-bottom: 12px;
+        padding-left: 40px;
+        background: url(../img/icon-phone-color_f.png) 0 center no-repeat;
+        font-size: 20px;
+        color: #e8e8e8;
+        text-align: right;
+
+        a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+
+    &__phone {
+        display: block;
+        margin-bottom: 12px;
+        padding-left: 40px;
+        background: url(../img/icon-phone_f.png) 0 center no-repeat;
+        font-size: 24px;
+        color: #e8e8e8;
+        text-decoration: none;
+    }
+
+    &__callback {
+        display: block;
+        @extend .button;
+    }
+}
+
+
+
+@media (max-width: $sm-width) {
+    .footer {
+        &__wrap {
+            display: block;
+        }
+    }
+}

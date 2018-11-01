@@ -1,0 +1,25 @@
+.modals {}
+
+
+
+.popup {
+    position: relative;
+    background: #FFF;
+    padding: 30px;
+    width: auto;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #898989;
+
+    label {
+        box-sizing: border-box;
+        text-align: left;
+        width: 245px;
+        margin: 0 auto 10px;
+    }
+
+    input {
+        box-sizing: border-box;
+        width: 245px;
+    }
+}

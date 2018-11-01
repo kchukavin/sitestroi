@@ -1,0 +1,8 @@
+{
+  "name": "wallspace",
+  "dependencies": {
+    "magnific-popup": "^1.1.0",
+    "slideout.js": "^1.0.1",
+    "owl.carousel": "^2.3.4"
+  }
+}

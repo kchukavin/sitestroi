@@ -1,0 +1,74 @@
+.navigation {
+
+    background-image: -moz-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+    background-image: -webkit-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+    background-image: -ms-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+    //box-shadow: 0px 3px 0px 0px rgba(4, 76, 62, 0.004);
+    border-bottom: 3px solid #044c3e;
+
+    ul {
+        display: table;
+
+        width: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        border-collapse: collapse;
+        list-style-type: none;
+    }
+
+    li {
+        display: table-cell;
+        border-left: 2px solid rgb(28, 113, 101);
+        border-right: 2px solid rgb(28, 113, 101);
+    }
+
+    a {
+        @extend .animated;
+
+        display: block;
+        padding: 13px 0;
+        font-size: 20px;
+        color: #fff;
+        text-decoration: none;
+
+        text-align: center;
+
+        //background: #39ad9d;
+        //border-top: 1px solid #39ad9d;
+        //border-bottom: 1px solid #39ad9d;
+
+        background-image: -moz-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+        background-image: -webkit-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+        background-image: -ms-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+
+
+        &:hover {
+            //background: #38a999;
+            //border-top: 1px solid #fff;
+            //border-bottom: 1px solid #fff;
+
+            background-image: -moz-linear-gradient( -90deg, rgb(23,120,107) 0%, rgb(57,173,157) 79%);
+            background-image: -webkit-linear-gradient( -90deg, rgb(23,120,107) 0%, rgb(57,173,157) 79%);
+            background-image: -ms-linear-gradient( -90deg, rgb(23,120,107) 0%, rgb(57,173,157) 79%);
+
+            //box-shadow: inset 4.114px 5.663px 1px 0px rgba(0, 0, 0, 0.26);
+
+        }
+    }
+}
+
+
+.Прямоугольник_2 {
+  background-image: -moz-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(41,139,125) 0%, rgb(57,173,157) 100%);
+  box-shadow: 0px 3px 0px 0px rgba(4, 76, 62, 0.004);
+  position: absolute;
+  left: 0px;
+  top: 124px;
+  width: 1170px;
+  height: 55px;
+  z-index: 44;
+}

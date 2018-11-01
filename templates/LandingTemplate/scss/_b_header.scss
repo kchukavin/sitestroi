@@ -1,0 +1,58 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 124px;
+
+    &__contacts {
+        //float: right;
+    }
+
+    &__social {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+
+        a {
+            display: inline-block;
+            vertical-align: middle;
+            img {
+                display: block;
+            }
+        }
+    }
+    &__phones {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 47px;
+        background: url(../img/icon-phone-color.png) 0 center no-repeat;
+        font-size: 20px;
+        color: #292929;
+        text-align: right;
+
+        a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+
+    }
+    &__phone {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 40px;
+        background: url(../img/icon-phone.png) 0 center no-repeat;
+        font-size: 24px;
+        color: #292929;
+        text-decoration: none;
+    }
+
+    &__callback {
+        @extend .button;
+
+        margin-left: 10px;
+    }
+
+}
