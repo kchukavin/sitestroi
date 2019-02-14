@@ -6,18 +6,7 @@ use Leafo\ScssPhp\Compiler;
 
 // CONFIG BEGIN
 
-$LOGS = false;
-
-$rootDir = fixWindowsPath(__DIR__) . '/../';
-
-$tasks = array(
-	array(
-		'import_dir' => 'custom/my/scss/',
-		'import_file' => 'styles.scss',
-		'output_dir' => 'custom/my/css/',
-		'output_file' => 'generated.css',
-	),
-);
+include('scss_config.php');
 
 // CONFIG END
 
