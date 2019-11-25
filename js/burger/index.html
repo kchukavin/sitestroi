@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Заголовок страницы</title>
+	
+	<style>
+	</style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="head__burger">
+	<button class="burger">
+		<div class="burger__line"></div>
+		<div class="burger__line"></div>
+		<div class="burger__line"></div>
+	</button>
+</div>
+
+<div class="top_menu">
+    <!-- шаблонный тег вывода первого меню (параметр id=1). Настраивается в файле /modules/menu/views/menu.view.show_block_topmenu.php 
+    Документация тега http://cms.diafan.ru/dokument/full-manual/templates-functions/#show_block_menu -->
+    <ul class="sf-menu"><li class="top_menu_separator_1_empty"></li><li><a href="https://gsmexpertpro.ru/"class=" active">Главная</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/otzyvy/">Отзывы</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/sroki-remonta/">Цены и сроки</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/my-ispolzuem-tolko-originalnye-zapchasti/">Гарантия</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/kontakty/">Контакты</a></li></ul>
+
+    <div class="visible-md">
+        <div class="top_menu__heading">
+            Услуги
+        </div>
+        <ul class="sf-menu"><li class="top_menu_separator_1_empty"></li><li><a href="https://gsmexpertpro.ru/remont-noutbukov/">Ремонт ноутбуков</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/remont-telefonov/">Ремонт телефонов</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/remont-planshetov/">Ремонт планшетов</a></li><li class="top_menu_separator_1"></li><li><a href="https://gsmexpertpro.ru/pokupka-tekhniki/">Покупка техники</a></li></ul>
+    </div>
+
+</div>
+
+<script>
+	$('.burger').click(function() {
+		$(this).toggleClass('burger_active');
+		$('.top_menu').toggleClass('top_menu_visible');
+	});
+</script>
+</body>
+</html>
+
+

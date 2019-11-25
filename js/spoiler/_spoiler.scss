@@ -1,0 +1,28 @@
+
+
+.spoiler {
+    &__toggle,
+    &__open,
+    &__close {
+        font-size: 12px;
+        color: #6c141a;
+        border-bottom: 1px dotted #6c141a;
+
+        cursor: pointer;
+    }
+
+    &__close,
+    &__content {
+        display: none;
+    }
+}
+
+
+.spoiler_opened {
+    .spoiler__open {
+        display: none;
+    }
+    .spoiler__close {
+        display: unset;
+    }
+}

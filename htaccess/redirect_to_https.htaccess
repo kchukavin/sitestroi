@@ -4,7 +4,20 @@ RewriteCond %{REQUEST_URI} !robots.txt$
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
 
+# Вариант для sweb.ru
+RewriteCond %{HTTP:HTTPS} !=on [NC]
+RewriteCond %{REQUEST_URI} !robots.txt$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+SetEnvIf X-Forwarded-Proto https HTTPS=on
+
+
 
 # Альтернативный вариант
 RewriteCond %{HTTPS} =off 
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
+
+# редирект с http на https без 1С
+RewriteCond %{HTTP:X-Forwarded-Protocol} !=https
+RewriteCond %{THE_REQUEST} !^.*/exchange1c.php
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]

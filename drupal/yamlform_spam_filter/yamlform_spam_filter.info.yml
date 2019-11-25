@@ -1,0 +1,14 @@
+name: Yamlform Spam Filter
+type: module
+description: Filters spam messages from form
+# core: 8.x
+package: Spam control
+dependencies:
+  - yamlform
+
+# Information added by Drupal.org packaging script on 2017-07-18
+version: '8.x-1.1'
+core: '8.x'
+project: 'yamlform_spam_filter'
+datestamp: 1500391613
+

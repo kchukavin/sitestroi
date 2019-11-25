@@ -10,6 +10,10 @@ include('scss_config.php');
 
 // CONFIG END
 
+if (isset($_GET['debug'])) {
+	$LOGS = true;
+}
+
 writeLog('Processing:<br>');
 
 foreach ($tasks as $task) {

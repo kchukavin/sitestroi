@@ -1,18 +1,21 @@
 <?php
 
-$_config = array(
-    'emails' => "konst.site@gmail.com", // Comma-separated
-    'telegram' => false,
-    'telegram_bot_token' => '123456789:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-    'telegram_chat_id' => -123456789,
-);
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
+
+include('phpsend_config.php');
 
 $redirectPath = $_SERVER['HTTP_REFERER'];
 
-if (!isset($_POST['form_name'])) $_POST['form_name'] = 'noname';
+if (!isset($_POST['form_name'])) $_POST['form_name'] = 'Заявка с сайта';
 
 function post2Msg($post) {
-	
 	/* POST sample:
 	array (
 	  'form_name' => 'Получить полный прайс',
@@ -82,8 +85,9 @@ function telegramSend($msg) {
     ));
 }
 
+
 $address = $_config['emails'];
-$sub = $_POST['form_name'] . ' <'.$_SERVER['HTTP_REFERER'].'>'; // Тема письма
+$sub = $_POST['form_name'] . ' <'.$_SERVER['SERVER_NAME'].'>'; // Тема письма
 $email = 'Заказ <no-reply@nodomain.no>'; // От кого
 
 // А здесь прописывается текст сообщения, \n - перенос строки
@@ -94,10 +98,50 @@ if ($_config['telegram']) {
     telegramSend($message);
 }
 
-// А эта функция как раз занимается отправкой письма на указанный вами email
-$send = mail ($address,$sub,$message,"Content-type:text/plain; charset = utf-8\r\nFrom:$email");
+$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+try {
+    //Server settings
+    //$mail->SMTPDebug = 2;                                 // Enable verbose debug output
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->CharSet = "UTF-8";
+    if ($_config['smtp']) {
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = $_config['smtp_host']; //'smtp1.example.com;smtp2.example.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = $_config['smtp_username'];          // SMTP username
+		$mail->Password = $_config['smtp_password'];          // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = $_config['smtp_port'];                  // TCP port to connect to
+	}
 
-// Response sample: {"message":"OK","results":["1045324:145497492"]}
+    //Recipients
+    $mail->setFrom($_config['smtp_from'], $_config['smtp_from_name']);
+	
+	foreach ($_config['emails'] as $email) {
+		$mail->addAddress($email);               // Name is optional
+	}
+    //$mail->addAddress('joe@example.net', 'Joe User');     // Add a recipient
+    //$mail->addReplyTo($_config['smtp_from'], $_config['smtp_from_name']);
+    //$mail->addCC('cc@example.com');
+    //$mail->addBCC('bcc@example.com');
+
+    //Attachments
+    //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+    //Content
+    $mail->isHTML(false);                                  // Set email format to HTML
+    $mail->Subject = $sub;
+    $mail->Body    = $message;
+    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    $mail->send();
+    //echo 'Message has been sent';
+	$send = true;
+} catch (Exception $e) {
+    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+	$send = false;
+}
 
 if ($send) {
 	$r = json_encode(array(
@@ -111,7 +155,5 @@ if ($send) {
 	));
 }
 
-
 echo $r;
-
 ?>

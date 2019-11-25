@@ -1,0 +1,4 @@
+.responsive-table__wrapper {
+	max-width: 100%;
+	overflow-x: auto;
+}

@@ -1,0 +1,5 @@
+
+// after >> include ABSOLUTE_PATH.'config.php';
+
+// Scss compiling
+include ABSOLUTE_PATH.'bin/scss.php';

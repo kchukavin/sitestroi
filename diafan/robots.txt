@@ -1,23 +1,14 @@
 User-agent: *
 Disallow: /adm*
-Disallow: /cache*
+Disallow: /bin*
 Disallow: /cgi-bin*
-Disallow: /css*
-Disallow: /img*
 Disallow: /includes*
 Disallow: /plugins*
 Disallow: /themes*
 Disallow: /modules*
 Disallow: /installation*
-Disallow: /js*
-Disallow: /min*
-Disallow: /compress*
-Disallow: /shop/wishlist*
-Disallow: /shop/cart*
-Disallow: /?*
-Disallow: /reminding
-Disallow: /user
-Disallow: /registration
+Disallow: /vendor*
+Disallow: /*?
 
 Host: rti16.ru
 Sitemap: http://rti16.ru/sitemap.xml
