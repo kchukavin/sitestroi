@@ -1,0 +1,78 @@
+
+
+.rel2_all_elements{
+	overflow: hidden;
+	margin: 22px -20px 8px -7px;
+}
+.rel2_module{
+	float: left;
+	margin: 0 9px 8px 0;
+	border: 1px solid transparent;
+	padding: 5px 6px;
+	height: 49px;
+	width: 186px;
+	font: 12px/14px ptsans;
+	color: #2f3438;
+	overflow: hidden;
+}
+.rel2_module:hover,
+.rel2_module_selected{
+	border-color: #b2d67c;
+	color: #2f3438;
+}
+.rel2_module img{
+	float: left;
+	margin: 0 10px 0 0;
+	border: 1px solid #d6d0d0;
+	width: 40px;
+	max-height: 40px;
+	padding: 2px 2px;
+	height: auto;
+}
+.rel2_module span{
+	display: block;
+	height: 40px;
+	overflow: hidden;
+	-ms-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+
+.rel2_elements{
+	overflow: hidden;
+}
+.rel2_element{
+	float: left;
+	margin: 0 0 14px;
+	width: 315px;
+}
+.rel2_element > img{
+	float: left;
+	margin: 3px 10px 0 0;
+	border: 1px solid #d6d0d0;
+	width: 50px;
+	height: auto;
+}
+.rel2_element_actions{
+	overflow: hidden;
+}
+.rel2_element_actions a{
+	display: block;
+	font: 12px/20px ptsans;
+	color: #889397;
+}
+.rel2_element_actions a:hover{
+	color: #2e2e2e;
+}
+.rel2_element_actions a .fa{
+	width: 13px;
+}
+
+@media (max-width: 530px) {
+
+	.rel2_module{
+		margin: 0 6px 8px 0;
+		padding: 5px;
+		width: 178px;
+	}
+
+}

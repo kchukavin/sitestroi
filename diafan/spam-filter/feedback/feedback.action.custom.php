@@ -23,12 +23,26 @@ if (! defined('DIAFAN'))
 
 class Feedback_action extends Action
 {	
+	new protected function load_blacklist()
+	{
+        $blackList = ['http', 'https', 'and', 'or', 'then', 'new', 'not', 'from', 'this', 'most', 'important', 'sex', 'sexy'];
+		
+		$blackList = array_unique(array_merge($blackList, file(ABSOLUTE_PATH . 'spam-blacklist.lst', FILE_IGNORE_NEW_LINES)));
+		
+		foreach ($blackList as $key => $val) {
+			$blackList[$key] = trim($val);
+			if (empty($blackList[$key])) unset($blackList[$key]);
+		}
+		
+		return $blackList;
+	}
 
 	new protected function check_words_blacklist($text)
 	{
         $separators = [' ', '.', ',', ';', ':', '?', '<', '>'];
-        $blackList = ['http', 'https', 'and', 'or', 'then', 'new', 'not', 'from', 'this', 'most', 'important', 'sex', 'sexy'];
-
+		
+		$blackList = $this->load_blacklist();
+		
         $textCleaned = str_replace($separators, ' ', strtolower($text));
 
         $words = explode(' ', $textCleaned);
@@ -47,8 +61,8 @@ class Feedback_action extends Action
 	 */
 	before public function add()
 	{
-		if ($_REQUEST['site_id'] == 180) {
-			if (!$this->check_words_blacklist($_REQUEST['p20']))
+		if ($_REQUEST['site_id'] == 165) {
+			if (!$this->check_words_blacklist($_REQUEST['p19']))
 			{
 				$logMessage = date('Y-m-d H:i:s') . ":\n" . print_r($_REQUEST, true) . "\n\n";
 				file_put_contents(ABSOLUTE_PATH . 'spam-filtered.log', $logMessage, FILE_APPEND);

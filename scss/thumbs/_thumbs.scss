@@ -1,0 +1,23 @@
+
+
+.thumbs {
+	display: flex;
+	justify-content: space-between;
+
+	&__item {
+
+	}
+}
+
+.thumb {
+	width: 240px;
+
+    img {
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        display: block;
+    }
+}

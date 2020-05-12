@@ -18,6 +18,8 @@ class TildaGet
     protected function getFileNameFromUrl($url)
     {
         $parsed = parse_url($url);
+		if (!isset($parsed['path']) or $parsed['path'] === '/') $parsed['path'] = '/index.html';
+
         $r = $this->getDataDir() . $parsed['host'] . $parsed['path'];
         return $r;
     }
@@ -74,7 +76,10 @@ class TildaGet
         $links = array_merge(
             $links,
             $this->getPregResults('~data-original=[\'\"](.+?)[\'\"]~', $content),
-            $this->getPregResults('~<link rel=\"stylesheet\".+?href=[\'\"](.+?)[\'\"]~', $content)
+            $this->getPregResults('~<link rel=\"stylesheet\".+?href=[\'\"](.+?)[\'\"]~', $content),
+            $this->getPregResults('~url\([\'\"](.+?)[\'\"]\)~', $content),
+            $this->getPregResults('~\.cachedScript\([\'\"](.+?)[\'\"]\)~', $content),
+            $this->getPregResults('~\"([\:|/|.|\w|\s|-]+?\.(jpg|jpeg|png|gif))\"~', $content),
         );
         return $links;
     }

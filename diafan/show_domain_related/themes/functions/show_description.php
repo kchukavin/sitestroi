@@ -22,12 +22,8 @@ if (! defined('DIAFAN'))
 }
 
 // domain_related block
-$dr = $this->functions('show_domain_related', array('key' => 'description'));
-
-if (!empty($dr)) {
-	echo $dr;
-	return;
-}
+$this->functions('show_domain_related', array('key' => 'description'));
+return;
 
 // /domain_related block
 

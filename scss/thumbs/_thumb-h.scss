@@ -1,0 +1,24 @@
+
+
+.thumb-h {
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 20px;
+
+    img {
+        vertical-align: middle;
+        margin-right: 20px;
+    }
+
+    &__title {
+        display: inline-block;
+        vertical-align: middle;
+
+        font-family: $font2;
+        font-size: 24px;
+        color: #303030;
+    }
+}
