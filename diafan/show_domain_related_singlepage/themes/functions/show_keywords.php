@@ -21,8 +21,11 @@ if (! defined('DIAFAN'))
 	include $path.'/includes/404.php';
 }
 
-require_once(dirname(__FILE__) . '/domain_related.inc.php');
-$dr = new DomainRelated();
+// domain_related block
+$this->functions('show_domain_related', array('key' => 'keywords'));
+return;
+
+// /domain_related block
 
 if(! $this->diafan->_site->keywords && $this->diafan->configmodules('keywords_tpl', 'site'))
 {
@@ -37,5 +40,4 @@ if(! $this->diafan->_site->keywords && $this->diafan->configmodules('keywords_tp
 		$this->diafan->configmodules("keywords_tpl", 'site')
 	);
 }
-$text = str_replace('"', '&quot;', $this->diafan->_site->keywords);
-echo $dr->replaceKeys($text);
+echo str_replace('"', '&quot;', $this->diafan->_site->keywords);

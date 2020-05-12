@@ -12,6 +12,10 @@
  *	),
  */
 
+// Подключаем конфиг с массивом CSS-кодов
+$data = include(dirname(__FILE__) . '/../domain_related.php');
+
+
 if (! defined('DIAFAN'))
 {
 	$path = __FILE__; $i = 0;
@@ -23,12 +27,16 @@ if (! defined('DIAFAN'))
 	include $path.'/includes/404.php';
 }
 
-require_once(dirname(__FILE__) . '/domain_related.inc.php');
-$dr = new DomainRelated();
-
 $attributes = $this->get_attributes($attributes, 'key');
 $key = $attributes['key'];
 
-$text = $dr->getText($key);
+$text = '';
+
+foreach ($data as $pattern => $value) {
+	if ( $pattern == $_SERVER['SERVER_NAME'] and isset($value[$key]) ) {
+		$text = $value[$attributes['key']];
+		break;
+	}
+}
 
 echo $text;

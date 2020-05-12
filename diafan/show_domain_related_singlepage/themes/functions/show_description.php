@@ -1,6 +1,6 @@
 <?php
 /**
- * Шаблонный тег: выводит ключевые слова страницы. Используется для мета-тега keywords.
+ * Шаблонный тег: выводит мета-тег description страницы.
  *
  * @package    DIAFAN.CMS
  * @author     diafan.ru
@@ -21,21 +21,24 @@ if (! defined('DIAFAN'))
 	include $path.'/includes/404.php';
 }
 
-require_once(dirname(__FILE__) . '/domain_related.inc.php');
-$dr = new DomainRelated();
+// domain_related block
+$this->functions('show_domain_related', array('key' => 'description'));
+return;
 
-if(! $this->diafan->_site->keywords && $this->diafan->configmodules('keywords_tpl', 'site'))
+// /domain_related block
+
+if(!$this->diafan->_site->descr && $this->diafan->configmodules('descr_tpl', 'site'))
 {
 	if($this->diafan->_site->parent_id && ! $this->diafan->_site->parent_name
-	   && strpos($this->diafan->configmodules("keywords_tpl", 'site'), '%parent') !== false)
+	   && strpos($this->diafan->configmodules("descr_tpl", 'site'), '%parent') !== false)
 	{
 		$this->diafan->_site->parent_name = DB::query_result("SELECT [name] FROM {site} WHERE id=%d", $this->diafan->_site->parent_id);
 	}
-	$this->diafan->_site->keywords = str_replace(
+	$this->diafan->_site->descr = str_replace(
 		array('%name', '%parent'),
 		array($this->diafan->_site->name, $this->diafan->_site->parent_name),
-		$this->diafan->configmodules("keywords_tpl", 'site')
+		$this->diafan->configmodules("descr_tpl", 'site')
 	);
 }
-$text = str_replace('"', '&quot;', $this->diafan->_site->keywords);
-echo $dr->replaceKeys($text);
+
+echo str_replace('"', '&quot;', $this->diafan->_site->descr);

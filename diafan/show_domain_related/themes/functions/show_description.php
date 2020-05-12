@@ -21,11 +21,8 @@ if (! defined('DIAFAN'))
 	include $path.'/includes/404.php';
 }
 
-// domain_related block
-$this->functions('show_domain_related', array('key' => 'description'));
-return;
-
-// /domain_related block
+require_once(dirname(__FILE__) . '/domain_related.inc.php');
+$dr = new DomainRelated();
 
 if(!$this->diafan->_site->descr && $this->diafan->configmodules('descr_tpl', 'site'))
 {
@@ -41,4 +38,5 @@ if(!$this->diafan->_site->descr && $this->diafan->configmodules('descr_tpl', 'si
 	);
 }
 
-echo str_replace('"', '&quot;', $this->diafan->_site->descr);
+$text = str_replace('"', '&quot;', $this->diafan->_site->descr);
+echo $dr->replaceKeys($text);

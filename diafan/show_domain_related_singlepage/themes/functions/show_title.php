@@ -1,7 +1,7 @@
 <?php
 /**
  * Шаблонный тег: выводит заголовок. Используется между тегами `<title></title>` в шапке сайта.
- *
+ * 
  * @package    DIAFAN.CMS
  * @author     diafan.ru
  * @version    6.0
@@ -21,36 +21,32 @@ if (! defined('DIAFAN'))
 	include $path.'/includes/404.php';
 }
 
-require_once(dirname(__FILE__) . '/domain_related.inc.php');
-$dr = new DomainRelated();
+// domain_related block
+$this->functions('show_domain_related', array('key' => 'title'));
+return;
+
+// /domain_related block
 
 if ($this->diafan->_site->titlemodule_meta)
 {
-	$text = $this->diafan->_site->titlemodule_meta;
-	echo $dr->replaceKeys($text);
+	echo $this->diafan->_site->titlemodule_meta;
 	return;
 }
 if($this->diafan->_route->page > 1)
 {
 	$page = $this->diafan->_(' — Страница %d', false, $this->diafan->_route->page);
 }
+elseif($this->diafan->_route->rpage > 1)
+{
+	$page = $this->diafan->_(' — Страница %d', false, $this->diafan->_route->rpage);
+}
 else
 {
-	$args = $this->diafan->_route->get_rewrite_variable();
-	$arg = reset($args);
-	if($arg && $this->diafan->_route->$arg > 1)
-	{
-		$page = $this->diafan->_(' — Страница %d', false, $this->diafan->_route->$arg);
-	}
-	else
-	{
-		$page = '';
-	}
+	$page = '';
 }
 if ($this->diafan->_site->title_meta)
 {
-	$text = ($this->diafan->_site->titlemodule ? $this->diafan->_site->titlemodule.' — ' : '').$this->diafan->_site->title_meta.$page;
-	echo $dr->replaceKeys($text);
+	echo ($this->diafan->_site->titlemodule ? $this->diafan->_site->titlemodule.' — ' : '').$this->diafan->_site->title_meta.$page;
 	return;
 }
 if($this->diafan->configmodules('title_tpl', 'site'))
@@ -65,9 +61,7 @@ if($this->diafan->configmodules('title_tpl', 'site'))
 		array($this->diafan->_site->name, $this->diafan->_site->parent_name),
 		$this->diafan->configmodules("title_tpl", 'site')
 	);
-	$text = $this->diafan->_site->title_meta.$page;
-	echo $dr->replaceKeys($text);
+	echo $this->diafan->_site->title_meta.$page;
 	return;
 }
-$text = ($this->diafan->_site->titlemodule ? $this->diafan->_site->titlemodule.' — ' : '').$this->diafan->_site->name.$page.(TITLE ? ' — '.TITLE : '');
-echo $dr->replaceKeys($text);
+echo ($this->diafan->_site->titlemodule ? $this->diafan->_site->titlemodule.' — ' : '').$this->diafan->_site->name.$page.(TITLE ? ' — '.TITLE : '');
