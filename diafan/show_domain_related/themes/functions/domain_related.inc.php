@@ -28,7 +28,14 @@ class DomainRelated
 
 	protected function getDomainData()
 	{
-		return $this->getData()[$_SERVER['SERVER_NAME']];
+		$r = [];
+
+		$data = $this->getData();
+		if (isset($data[$_SERVER['SERVER_NAME']])) {
+			$r = $data[$_SERVER['SERVER_NAME']];
+		}
+
+		return $r;
 	}
 
 	public function getText($key)
