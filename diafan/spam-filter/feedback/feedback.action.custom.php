@@ -27,7 +27,11 @@ class Feedback_action extends Action
 	{
         $blackList = ['http', 'https', 'and', 'or', 'then', 'new', 'not', 'from', 'this', 'most', 'important', 'sex', 'sexy'];
 		
-		$blackList = array_unique(array_merge($blackList, file(ABSOLUTE_PATH . 'spam-blacklist.lst', FILE_IGNORE_NEW_LINES)));
+		$blackListFile = ABSOLUTE_PATH . 'spam-blacklist.lst';
+		if (file_exists($blackListFile)) {
+			// $blackList = array_unique(array_merge($blackList, file($blackListFile, FILE_IGNORE_NEW_LINES)));
+			$blackList = array_unique(file($blackListFile, FILE_IGNORE_NEW_LINES));
+		}
 		
 		foreach ($blackList as $key => $val) {
 			$blackList[$key] = trim($val);
@@ -39,7 +43,7 @@ class Feedback_action extends Action
 
 	new protected function check_words_blacklist($text)
 	{
-        $separators = [' ', '.', ',', ';', ':', '?', '<', '>'];
+        $separators = [' ', '.', ',', ';', ':', '?', '<', '>', '_', '"', "'"];
 		
 		$blackList = $this->load_blacklist();
 		
@@ -61,14 +65,12 @@ class Feedback_action extends Action
 	 */
 	before public function add()
 	{
-		if ($_REQUEST['site_id'] == 165) {
-			if (!$this->check_words_blacklist($_REQUEST['p19']))
-			{
-				$logMessage = date('Y-m-d H:i:s') . ":\n" . print_r($_REQUEST, true) . "\n\n";
-				file_put_contents(ABSOLUTE_PATH . 'spam-filtered.log', $logMessage, FILE_APPEND);
-				return;
-			}
-		}
+        if (!$this->check_words_blacklist($_REQUEST['p19']))
+        {
+            $logMessage = date('Y-m-d H:i:s') . ":\n" . print_r($_REQUEST, true) . "\n\n";
+            file_put_contents(ABSOLUTE_PATH . 'spam-filtered.log', $logMessage, FILE_APPEND);
+            return;
+        }
 
 		/*
 		print_r($_REQUEST);

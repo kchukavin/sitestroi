@@ -26,7 +26,7 @@ class Feedback_action extends Action
 
 	protected function check_words_blacklist($text)
 	{
-        $separators = [' ', '.', ',', ';', ':', '?', '<', '>'];
+        $separators = [' ', '.', ',', ';', ':', '?', '<', '>', '_', '"', "'"];
         $blackList = ['http', 'https', 'and', 'or', 'then', 'new', 'not', 'from', 'this', 'most', 'important', 'sex', 'sexy'];
 
         $textCleaned = str_replace($separators, ' ', strtolower($text));

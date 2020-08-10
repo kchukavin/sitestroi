@@ -1,0 +1,7 @@
+# Редиректим на другой домен
+RewriteCond %{HTTP_HOST} ^(www\.)?kirpich16\.ru [NC]
+RewriteRule ^(.*)$ https://zskchelny.ru/$1 [R=301,L]
+
+# Редиректим на другой домен
+RewriteCond %{HTTP_HOST} !^akitads\.ru [NC]
+RewriteRule ^(.*)$ https://akitads.ru/$1 [R=301,L]

@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <style>
+        /** lazy-map **/
+
+        .lazy-map {
+            display: block;
+            height: 400px;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Lazy maps example</h1>
+        <div class="lazy-map" style="background-image: url(img/ym01.png);">
+            <script type="text/javascript" charset="utf-8" async data-src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A235e7e82ff8857d29ddfcf65199135a9bd8cdc01a2764f0126dfbc480d85999c&width=100%25&height=400&lang=ru_RU&scroll=false"></script>
+        </div>
+        
+        <div class="lazy-map" style="background-image: url(img/ym02.png);">
+            <script type="text/javascript" charset="utf-8" defer data-src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Adec75ed08563af349d19cdd503115db0ef0ce93d0498ffa1d3461a78cfba85ab&width=100%25&height=400&lang=ru_RU&scroll=false"></script>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <script>
+        $(function() {
+            const lazyMapLoad = function () {
+                console.log('Loading...');
+                const $script = $(this).find('script[data-src]');
+                const dataSrc = $script.data('src');
+                if (dataSrc) {
+                    $script.prop('src', dataSrc);
+                    $script.removeProp('data-src');
+                    $(this).addClass('loaded');
+                }
+            };
+
+            $('.lazy-map').not('.loaded').on('hover mouseover touchstart touchmove click', lazyMapLoad);
+        });
+    </script>
+  </body>
+</html>

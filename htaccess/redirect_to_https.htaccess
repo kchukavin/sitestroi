@@ -10,7 +10,10 @@ RewriteCond %{REQUEST_URI} !robots.txt$
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 SetEnvIf X-Forwarded-Proto https HTTPS=on
 
-
+# Вариант для nic.ru
+RewriteEngine On
+RewriteCond %{ENV:HTTPS} !on
+RewriteRule ^.*$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Альтернативный вариант
 RewriteCond %{HTTPS} =off 
