@@ -29,7 +29,7 @@ if(empty($site_ids))
 }
 */
 
-$limit = 15;
+$limit = 5000; // unlimited...
 $time = mktime(23, 59, 0, date("m"), date("d"), date("Y"));
 
 $rows = DB::query_fetch_all("SELECT e.id, e.[name], e.[text], e.timeedit FROM {site} AS e"
@@ -37,6 +37,7 @@ $rows = DB::query_fetch_all("SELECT e.id, e.[name], e.[text], e.timeedit FROM {s
 ." AND e.date_start<=%d AND (e.date_finish=0 OR e.date_finish>=%d)"
 .($this->diafan->configmodules('where_access_element', 'site') ? " AND (e.access='0' OR e.access='1' AND a.role_id=".$this->diafan->_users->role_id.")" : '')
 ." ORDER BY e.id DESC LIMIT ".$limit, $time, $time, $time);
+
 
 $last  = '';
 $items  = '';
@@ -46,13 +47,16 @@ foreach ($rows as $row)
 	$this->diafan->_site->id = $row["id"]; // little hack for route module
 	$link = $this->diafan->_route->link($row["id"]);
 	
-	if(! $link) continue;
+	// if(! $link) continue;
 	if (empty($this->diafan->prepare_xml($row['text']))) continue;
 
 	if (empty($last))
 	{
 		$last = date("D, d F Y H:i:s O", $row['timeedit']);
 	}
+	
+	$xml = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->diafan->_tpl->htmleditor($row['text']));
+	
 	$items .= '
 	<item turbo="true">
 		<title>'.$this->diafan->prepare_xml($row['name']).'</title>'
@@ -61,7 +65,7 @@ foreach ($rows as $row)
 		.'<header>'
 		.'<h1>'.$this->diafan->prepare_xml($row['name']).'</h1>'
 		.'</header>'
-		.$this->diafan->_tpl->htmleditor($row['text'])
+		.$xml
 		//.$row['text']
 		.']]></turbo:content>
 		<pubDate>'.date("D, d F Y H:i:s O", $row['timeedit']).'</pubDate>'

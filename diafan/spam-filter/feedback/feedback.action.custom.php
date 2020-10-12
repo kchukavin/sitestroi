@@ -23,15 +23,41 @@ if (! defined('DIAFAN'))
 
 class Feedback_action extends Action
 {	
+	new protected function url_exists($url) {
+		$headers = @get_headers($url);
+		if($headers && (strpos($headers[0],'200') !== false)) {
+			return true;
+		}
+		return false;
+	}
+
+	new protected function load_array_from_file($file) {
+		if (!file_exists($file)) return [];
+		return file($file, FILE_IGNORE_NEW_LINES);
+	}
+	
+	new protected function load_array_from_url($url) {
+		if (!$this->url_exists($url)) return [];
+		return file($url, FILE_IGNORE_NEW_LINES);
+	}
+	
 	new protected function load_blacklist()
 	{
-        $blackList = ['http', 'https', 'and', 'or', 'then', 'new', 'not', 'from', 'this', 'most', 'important', 'sex', 'sexy'];
-		
+		$blackListDefault = ['http', 'https', 'and', 'or', 'then', 'new', 'not', 'from', 'this', 'most', 'important', 'sex', 'sexy'];
 		$blackListFile = ABSOLUTE_PATH . 'spam-blacklist.lst';
-		if (file_exists($blackListFile)) {
-			// $blackList = array_unique(array_merge($blackList, file($blackListFile, FILE_IGNORE_NEW_LINES)));
-			$blackList = array_unique(file($blackListFile, FILE_IGNORE_NEW_LINES));
+		$blackListUrl = 'https://sitestroi.net/spam-blacklist-global.lst';
+
+		$blackList = $this->load_array_from_file($blackListFile);
+
+		if (empty($blackList)) {
+			$blackList = $this->load_array_from_url($blackListUrl);
 		}
+		
+		if (empty($blackList)) {
+			$blackList = $blackListDefault;
+		}
+		
+		$blackList = array_unique($blackList);
 		
 		foreach ($blackList as $key => $val) {
 			$blackList[$key] = trim($val);
@@ -65,7 +91,7 @@ class Feedback_action extends Action
 	 */
 	before public function add()
 	{
-        if (!$this->check_words_blacklist($_REQUEST['p19']))
+        if (isset($_REQUEST['p19']) and !$this->check_words_blacklist($_REQUEST['p19']))
         {
             $logMessage = date('Y-m-d H:i:s') . ":\n" . print_r($_REQUEST, true) . "\n\n";
             file_put_contents(ABSOLUTE_PATH . 'spam-filtered.log', $logMessage, FILE_APPEND);
