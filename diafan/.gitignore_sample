@@ -1,6 +1,9 @@
 .bash_history
 .vim*
 .cache
+.vscode
+_db
+sftp-config.json
 cache/
 userfiles/
 userfls/

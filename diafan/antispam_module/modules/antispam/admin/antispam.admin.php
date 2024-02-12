@@ -103,13 +103,13 @@ class Antispam_admin extends Frame_admin
 	public function list_variable_text($row)
 	{
 		$data = json_decode($row['text']);
-		if (!empty($data) and property_exists($data, 'field')) {
+		if (!empty($data) and property_exists($data, 'field') and !empty($data->{$data->field})) {
 			$msg = htmlspecialchars($data->{$data->field});
 		} else {
 			$msg = $row['id'];
 		}
 		$text = '<div class="name"><a href="'.$this->diafan->get_base_link($row).'">';
-		$text .= $msg;
+		$text .= !empty($msg) ? $msg : 'Empty';
 		$text .= '</a></div>';
 		return $text;
 	}

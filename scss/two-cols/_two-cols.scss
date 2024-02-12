@@ -1,0 +1,19 @@
+
+.two-cols {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	@media (max-width: $md-breakpoint) {
+		display: block;
+	}
+
+	&__item {
+		flex: 1;
+		width: 50%;
+
+		@media (max-width: $md-breakpoint) {
+			width: 100%;
+		}
+	}
+}

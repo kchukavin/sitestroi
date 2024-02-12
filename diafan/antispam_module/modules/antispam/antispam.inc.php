@@ -26,6 +26,8 @@ if (! defined('DIAFAN'))
  */
 class Antispam_inc extends Model
 {
+	protected $blacklist = null;
+
 	protected function url_exists($url) {
 		if (filter_var($url, FILTER_VALIDATE_URL) === false) return false;
 
@@ -45,8 +47,6 @@ class Antispam_inc extends Model
 		if (!$this->url_exists($url)) return [];
 		return file($url, FILE_IGNORE_NEW_LINES);
 	}
-
-
 
 	protected function load_blacklist()
 	{
@@ -75,12 +75,22 @@ class Antispam_inc extends Model
 		return $blackList;
 	}
 
+	public function get_blacklist()
+	{
+		if ($this->blacklist === null)
+		{
+			$this->blacklist = $this->load_blacklist();
+		}
+
+		return $this->blacklist;
+	}
+
 	protected function check_words_blacklist($text)
 	{
 		$separators = [' ', '.', ',', ';', ':', '?', '<', '>', '_', '"', "'", "\n", "\r"];
 		
-		$blackList = $this->load_blacklist();
-		
+		$blackList = $this->get_blacklist();
+
 		$textCleaned = str_replace($separators, ' ', strtolower($text));
 
 		$words = explode(' ', $textCleaned);
@@ -89,6 +99,12 @@ class Antispam_inc extends Model
 			if (in_array($word, $blackList)) return false;
 		}
 
+		return true;
+	}
+	
+	protected function check_not_empty($text)
+	{
+		if (empty($text)) return false;
 		return true;
 	}
 
@@ -108,17 +124,56 @@ class Antispam_inc extends Model
 		$fields = explode(',', $this->diafan->configmodules('fields_to_filter', 'antispam'));
 
 		foreach ($fields as $field) {
-			if (isset($_REQUEST[$field]) and !$this->check_words_blacklist($_REQUEST[$field]))
-			{
+			$siteId = null;
+			
+			$testType = 'bl';
+			$field = trim($field);
+			
+			$fieldArr = explode('.', $field);
+			if (isset($fieldArr[1])) {
+				$siteId = $fieldArr[0];
+				$field = $fieldArr[1];
+			}
+			if (!is_null($siteId) and $_REQUEST['site_id'] != $siteId) {
+				continue;
+			}
+			
+			$fieldArr = explode(':', $field);
+			$field = $fieldArr[0];
+
+			if (isset($fieldArr[1])) {
+				$testType = trim($fieldArr[1]);
+			}
+
+			$filter = null;
+
+			switch ($testType) {
+				case 'ne': // Not empty
+					if (!isset($_REQUEST[$field]) or !$this->check_not_empty($_REQUEST[$field])) {
+						$filter = 'Not empty';
+					}
+				break;
+				
+				case 'bl': // BlackList
+				default:
+					if (isset($_REQUEST[$field]) and !$this->check_words_blacklist($_REQUEST[$field]))
+					{
+						$filter = 'Black list';
+					}
+			}
+
+			if (!empty($filter)) {
 				$data = array_merge(
 					$_REQUEST,
 					[
+						'filter' => $filter,
 						'field' => $field,
 					]
 				);
 				$save = DB::query("INSERT INTO {antispam} (created, `text`) VALUES (%d, %b)", time(), json_encode($data));
 				return false;
 			}
+			
 		}
 
 		return true;
