@@ -31,6 +31,9 @@ class Feedback_action extends Action
 	before public function add()
 	{
         if (!$this->diafan->_antispam->check_spam()) {
+			$this->result["errors"][0] = '<div align="center"><b>Спасибо за ваше сообщение!</b></div>';
+			$this->result["result"] = 'success';
+			$this->result["data"] = array("form" => false);
         	return;
         }
 	}

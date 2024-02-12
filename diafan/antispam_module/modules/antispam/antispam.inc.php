@@ -26,6 +26,10 @@ if (! defined('DIAFAN'))
  */
 class Antispam_inc extends Model
 {
+	const SESSION_MAX_UNIQUE_TEXT = 2;
+	const SESSION_MAX_DAY_POSTS = 3;
+	const SESSION_BLOCK_DAYS = 3;
+
 	protected $blacklist = null;
 
 	protected function url_exists($url) {
@@ -46,6 +50,22 @@ class Antispam_inc extends Model
 	protected function load_array_from_url($url) {
 		if (!$this->url_exists($url)) return [];
 		return file($url, FILE_IGNORE_NEW_LINES);
+	}
+
+	protected function load_json_file($filename) {
+		if (!file_exists($filename)) return [];
+		$json = file_get_contents($filename);
+		return json_decode($json, true);
+	}
+
+	protected function save_json_file($filename, $data = null) {
+		if ($data === null) {
+			return;
+		}
+		if (!file_exists(dirname($filename))) {
+			mkdir(dirname($filename), 0777, true);
+		}
+		file_put_contents($filename, json_encode($data));
 	}
 
 	protected function load_blacklist()
@@ -108,6 +128,55 @@ class Antispam_inc extends Model
 		return true;
 	}
 
+	protected function get_session_filename()
+	{
+		return ABSOLUTE_PATH . 'cache/antispam_sessions/' . md5($_SERVER['HTTP_COOKIE']) . '.json';
+	}
+
+	protected function calc_session_block_to($data)
+	{
+		$log = $data['log'];
+		$datas = array_column($log, 'data');
+		$times = array_column($log, 'time');
+		$minTime = min($times ? $times : [0]);
+		$maxTime = max($times ? $times : [0]);
+		if (count($log) > self::SESSION_MAX_DAY_POSTS and ($maxTime - $minTime < 24 * 60 * 60)) {
+			return $maxTime + self::SESSION_BLOCK_DAYS * 24 * 60 * 60;
+		}
+		if (count(array_unique($datas)) > self::SESSION_MAX_UNIQUE_TEXT) {
+			return $maxTime + self::SESSION_BLOCK_DAYS * 24 * 60 * 60;
+		}
+		return $data['block_to'];
+	}
+
+	protected function check_session($text)
+	{
+		$filename = $this->get_session_filename();
+		$data = $this->load_json_file($filename);
+
+		if (!$data) {
+			$data = [
+				'block_to' => 0,
+				'log' => []
+			];
+		}
+
+		$data['log'][] = [
+			'time' => time(),
+			'data' => $text
+		];
+
+		$logLength = self::SESSION_MAX_DAY_POSTS + 1;
+		$data['log'] = array_slice($data['log'], -$logLength, $logLength);
+
+		$blockTo = $this->calc_session_block_to($data);
+		$data['block_to'] = $blockTo;
+
+		$this->save_json_file($filename, $data);
+
+		return $blockTo < time();
+	}
+
 	public function check_spam()
 	{
 		/*
@@ -126,7 +195,7 @@ class Antispam_inc extends Model
 		foreach ($fields as $field) {
 			$siteId = null;
 			
-			$testType = 'bl';
+			$testTypes = ['bl'];
 			$field = trim($field);
 			
 			$fieldArr = explode('.', $field);
@@ -139,34 +208,42 @@ class Antispam_inc extends Model
 			}
 			
 			$fieldArr = explode(':', $field);
-			$field = $fieldArr[0];
+			$field = array_shift($fieldArr);
 
-			if (isset($fieldArr[1])) {
-				$testType = trim($fieldArr[1]);
+			if ($fieldArr) {
+				$testTypes = $fieldArr;
 			}
 
-			$filter = null;
+			$filters = [];
 
-			switch ($testType) {
-				case 'ne': // Not empty
-					if (!isset($_REQUEST[$field]) or !$this->check_not_empty($_REQUEST[$field])) {
-						$filter = 'Not empty';
-					}
-				break;
-				
-				case 'bl': // BlackList
-				default:
-					if (isset($_REQUEST[$field]) and !$this->check_words_blacklist($_REQUEST[$field]))
-					{
-						$filter = 'Black list';
-					}
+			foreach ($testTypes as $testType) {
+				switch ($testType) {
+					case 'ne': // Not empty
+						if (!isset($_REQUEST[$field]) or !$this->check_not_empty($_REQUEST[$field])) {
+							$filters[] = 'Not empty';
+						}
+					break;
+					
+					case 'se': // Unique for session
+						if (!$this->check_session($_REQUEST[$field])) {
+							$filters[] = 'Suspicious session';
+						}
+					break;
+					
+					case 'bl': // BlackList
+					default:
+						if (isset($_REQUEST[$field]) and !$this->check_words_blacklist($_REQUEST[$field]))
+						{
+							$filters[] = 'Black list';
+						}
+				}
 			}
 
-			if (!empty($filter)) {
+			if (!empty($filters)) {
 				$data = array_merge(
 					$_REQUEST,
 					[
-						'filter' => $filter,
+						'filters' => $filters,
 						'field' => $field,
 					]
 				);
