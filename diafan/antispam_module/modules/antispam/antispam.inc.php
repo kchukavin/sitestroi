@@ -26,8 +26,9 @@ if (! defined('DIAFAN'))
  */
 class Antispam_inc extends Model
 {
+	const SPAM_LOG_LIMIT = 500;
 	const SESSION_MAX_UNIQUE_TEXT = 2;
-	const SESSION_MAX_DAY_POSTS = 3;
+	const SESSION_MAX_DAY_POSTS = 5;
 	const SESSION_BLOCK_DAYS = 3;
 
 	protected $blacklist = null;
@@ -248,6 +249,22 @@ class Antispam_inc extends Model
 					]
 				);
 				$save = DB::query("INSERT INTO {antispam} (created, `text`) VALUES (%d, %b)", time(), json_encode($data));
+
+				// Clean old records
+				DB::query(
+					"DELETE FROM {antispam}
+					WHERE id NOT IN (
+						SELECT id
+						FROM (
+							SELECT id
+							FROM {antispam}
+							ORDER BY id DESC
+							LIMIT %d
+						) s
+					)",
+					self::SPAM_LOG_LIMIT
+				);
+
 				return false;
 			}
 			
